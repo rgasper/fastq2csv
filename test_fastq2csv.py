@@ -66,16 +66,40 @@ class TestFastqParsing(unittest.TestCase):
 
         self.assertEqual(expected, from_fastq_lines(lines))
 
+
+    def test_handles_quotes_in_seq_id(self):
+        seq_id = 'abcd123"'
+        description = "quotes"
+        sequence = "ATCG"
+        quality = "FFBB"
+        expected = FastQRecord(
+            seq_id=seq_id,
+            description=description,
+            sequence=sequence,
+            quality=quality,
+        )
+
+        lines = [
+            'abcd123" quotes',
+            "ATCG",
+            "+",
+            "FFBB",
+        ]
+
+        self.assertEqual(expected, from_fastq_lines(lines))
+
     def test_grouper(self):
         chunksize=4
         stuff = ["whatever"] * chunksize * 3
         for group in grouper(stuff, chunksize):
             self.assertEqual(len(group), chunksize)
 
+
     def test_filename_parsing_abspath(self):
         fqfile = "/Users/raymondgasper/Projects/work/fastq_playin/whatever.fq"
         csvfile = "/Users/raymondgasper/Projects/work/fastq_playin/whatever.csv"
         self.assertEqual(get_csv_fname(fqfile), csvfile)
+
 
     def test_filename_parsing_relpath(self):
         fqfile = "whatever.fq"
