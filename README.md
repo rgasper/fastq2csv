@@ -8,3 +8,8 @@ Handles about 12 Million fastq records (~3GB) per minute on my macbook.
 ```console
 python fastq2csv.py my_fq_file.fq
 ```
+
+## Pre-Commit
+
+This repo uses [pre-commit](https://pre-commit.com/) for maintaining code quality. Set it up in this repo by running
+`pre-commit install`.
